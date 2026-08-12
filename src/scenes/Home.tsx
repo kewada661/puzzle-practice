@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Scene } from '../types'
+import type { Scene } from '../types/scene'
 import reactLogo from '/src/assets/react.svg'
 import viteLogo from '/src/assets/vite.svg'
 import heroImg from '/src/assets/hero.png'

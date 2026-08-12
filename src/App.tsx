@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Scene } from './types'
+import type { Scene } from './types/scene'
 import { Home, OLL, PLL } from './scenes'
 import { Header } from './components'
 

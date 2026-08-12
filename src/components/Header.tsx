@@ -1,4 +1,4 @@
-import type { Scene } from "../types"
+import type { Scene } from "../types/scene"
 
 interface HeaderProps {
   changeScene: (scene: Scene) => void;

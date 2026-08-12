@@ -1,6 +1,5 @@
-import { Timer } from "../components"
+import { Timer, Case } from "../components"
 import type { TimerMode } from "../types";
-import { Case } from "../components/Case"
 import { useCallback, useEffect, useState } from "react";
 
 export const OLL = () => {
@@ -9,6 +8,7 @@ export const OLL = () => {
   const [solve, setSolve] = useState<String>("");
   const [mode, setMode] = useState<TimerMode>("RESET");
   const [displayHint, setDisplayHint] = useState<boolean>(false);
+
   var OLLCase: Case;
   var previousCases: Case[];
   const next = () => {

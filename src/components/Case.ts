@@ -10,8 +10,8 @@ class Case {
   scramble: String;
   solve: String;
   imgURL: string;
-  
-  constructor(step: number, ) {
+
+  constructor(step: number,) {
     this.step = step;
     this.number = Math.floor(Math.random() * scrambles[this.step].length)
     this.name = names[this.step][this.number];
