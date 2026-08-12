@@ -27,7 +27,7 @@ export const useGrades = (): useGradesResult => {
     }
   }
 
-  const updateGrades = async (grade: Grade) {
+  const updateGrades = async (grade: Grade) => {
     setLoading(true);
     setError(null);
     try {
