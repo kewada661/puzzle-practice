@@ -1,29 +1,31 @@
-import { useEffect, useState } from "react"
-import type { TimerMode } from "../types";
+import { useEffect, useState } from "react";
+import { useTimes } from "../hooks";
+import type { TimerMode, Time } from "../types";
 
 interface TimerProps {
   mode: TimerMode;
   setMode: (mode: TimerMode) => void;
 }
-export const Timer = ({mode, setMode}: TimerProps) => {
-  const [time, setTime] = useState<Date>(new Date(0));
+export const Timer = ({ mode, setMode }: TimerProps) => {
+  const [time, setTime] = useState<Time>({});
   const [display, setDisplay] = useState<String>("0");
   const [minutes, setMinutes] = useState<String>("0");
   const [seconds, setSeconds] = useState<String>("00");
   const [milliseconds, setMilliseconds] = useState<String>("000");
   const [intervalID, setIntervalID] = useState<number>(-1);
   const [running, setRunning] = useState<boolean>(false);
+  const { postTimes } = useTimes();
 
   let startTime: number;
-  
+
   const update = () => {
     const delta = new Date(Date.now() - startTime);
     setMinutes(String(delta.getMinutes()));
     setSeconds(String(delta.getSeconds()).padStart(2, '0'));
     setMilliseconds(String(delta.getMilliseconds()).padStart(3, '0'));
-    setTime(delta);
+    setTime({ ms_elapsed: delta.valueOf() });
   }
-  
+
   const timerStart = () => {
     if (running) return;
     setRunning(true);
@@ -41,7 +43,8 @@ export const Timer = ({mode, setMode}: TimerProps) => {
     console.log("  Stopping interval ID:", intervalID);
     clearInterval(intervalID);
     console.log(startTime);
-    setDisplay(String(time.valueOf()));
+    setDisplay(String(time.ms_elapsed));
+    postTimes(time);
   }
 
   const timerDelete = () => {
@@ -52,7 +55,7 @@ export const Timer = ({mode, setMode}: TimerProps) => {
     setSeconds("00");
     setMilliseconds("000");
   }
-  
+
   useEffect(() => {
     switch (mode) {
       case "RESET":
