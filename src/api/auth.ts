@@ -2,21 +2,18 @@ import type { LoginCredentials, User } from "../types";
 import { apiRequest } from "./client";
 
 export const loginRequest = async (credentials: LoginCredentials): Promise<User> => {
-  return apiRequest<User>("auth/login", 
+  return apiRequest<User>("/auth/login", 
     {
       method: "POST",
-      body: JSON.stringify({
-        username: credentials.username,
-        password: credentials.password
-      })
+      body: JSON.stringify(credentials)
     }
   )
 }
 
 export const logoutRequest = async (): Promise<void> => {
-  return apiRequest<void>("auth/logout");
+  return apiRequest<void>("/auth/logout");
 }
 
 export const refreshTokenRequest = async (): Promise<User> => {
-  return apiRequest<User>("auth/refresh");
+  return apiRequest<User>("/auth/refresh");
 }
