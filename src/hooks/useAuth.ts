@@ -27,6 +27,7 @@ export const useAuth = (): useAuthResults => {
     setError(null);
     try {
       const user = await AuthAPI.loginRequest(credentials);
+      console.log (user);
       setUser(user);
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Login failed");
