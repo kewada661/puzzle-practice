@@ -14,7 +14,11 @@ export const Timer = ({ mode, setMode }: TimerProps) => {
   const [milliseconds, setMilliseconds] = useState<String>("000");
   const [intervalID, setIntervalID] = useState<number>(-1);
   const [running, setRunning] = useState<boolean>(false);
-  const { postTimes } = useTimes();
+  const { 
+    postTimes,
+    loading: timesLoading,
+    error: timesError
+   } = useTimes();
 
   let startTime: number;
 
@@ -36,7 +40,7 @@ export const Timer = ({ mode, setMode }: TimerProps) => {
     console.log("  Starting interval ID:", intervalID);
   }
 
-  const timerStop = () => {
+  const timerStop = async () => {
     if (!running) return;
     setRunning(false);
     console.log("STOP");
@@ -44,7 +48,11 @@ export const Timer = ({ mode, setMode }: TimerProps) => {
     clearInterval(intervalID);
     console.log(startTime);
     setDisplay(String(time.ms_elapsed));
-    postTimes(time);
+    try {
+      await postTimes(time);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const timerDelete = () => {
@@ -59,13 +67,16 @@ export const Timer = ({ mode, setMode }: TimerProps) => {
   useEffect(() => {
     switch (mode) {
       case "RESET":
-        return timerDelete();
+        timerDelete();
+        break;
       case "START":
-        return timerStart();
+        timerStart();
+        break;
       case "STOP":
-        return timerStop();
+        timerStop();
+        break;
     }
-  }, [mode])
+  }, [mode]);
   return (
     <div className="flex flex-col mt-60">
       <span>{minutes}:{seconds}.{milliseconds}</span>

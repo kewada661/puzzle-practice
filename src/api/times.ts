@@ -1,8 +1,8 @@
 import type { Time } from "../types"
 import { apiRequest } from "./client"
 
-export const getTimes = async (case_id: number): Promise<[Time]> => {
-  return await apiRequest<[Time]>(`/times/${case_id}`,
+export const getTimes = async (case_id: number): Promise<Time[]> => {
+  return await apiRequest<Time[]>(`/times/${case_id}`,
     {
       method: "GET"
     }
@@ -26,7 +26,7 @@ export const getBest = async (case_id: number): Promise<Time> => {
 }
 
 export const postTimes = async (time: Time): Promise<void> => {
-  await apiRequest<[Time]>(`/times/${time.case_id}`,
+  await apiRequest<any>(`/times/${time.case_id}`,
     {
       method: "POST",
       body: JSON.stringify({
@@ -37,7 +37,7 @@ export const postTimes = async (time: Time): Promise<void> => {
 }
 
 export const patchTimes = async (time: Time): Promise<void> => {
-  await apiRequest<[Time]>(`/times/${time.time_id}`,
+  await apiRequest<any>(`/times/${time.time_id}`,
     {
       method: "PATCH",
       body: JSON.stringify({
