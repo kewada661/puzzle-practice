@@ -1,6 +1,6 @@
 export const apiRequest = async <T>(endpoint: string, options: RequestInit = {}) => {
   const response = await fetch(
-    `https:localhost:5000${endpoint}`,
+    `http://localhost:5000${endpoint}`,
     {
       ...options,
       headers: {
@@ -13,7 +13,7 @@ export const apiRequest = async <T>(endpoint: string, options: RequestInit = {})
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);
-    throw new Error(errorBody?.message ?? `Request failed with status code ${response.status}`)
+    throw new Error(`${errorBody?.message ?? `Request failed with status code ${response.status}`} at /api/${endpoint}`)
   }
 
   return response.json() as T;
