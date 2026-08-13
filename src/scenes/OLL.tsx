@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export const OLL = () => {
   const [name, setName] = useState<String>("");
+  const [case_id, setCase_id] = useState<number>(0);
   const [scramble, setScramble] = useState<String>("");
   const [solve, setSolve] = useState<String>("");
   const [mode, setMode] = useState<TimerMode>("RESET");
@@ -15,6 +16,7 @@ export const OLL = () => {
     console.log("NEXT:");
     if (OLLCase !== undefined) previousCases.push(OLLCase);
     OLLCase = new Case(0);
+    setCase_id(OLLCase.number+1);
     setName(OLLCase.name);
     setScramble(OLLCase.scramble);
     setSolve(OLLCase.solve);
@@ -36,6 +38,7 @@ export const OLL = () => {
   return (
     <>
       <span>name: {name}</span>
+      <span>case_id: {case_id}</span>
       <span>scramble: {scramble}</span>
       {(displayHint) ? (
         <span>Hint: {solve}</span>
@@ -50,6 +53,7 @@ export const OLL = () => {
       <Timer
         mode={mode}
         setMode={timerModeCallback}
+        case_id={case_id}
       />
     </>
   )
