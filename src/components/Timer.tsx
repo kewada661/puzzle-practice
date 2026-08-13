@@ -5,33 +5,36 @@ import type { TimerMode, Time } from "../types";
 interface TimerProps {
   mode: TimerMode;
   setMode: (mode: TimerMode) => void;
+  case_id: number
 }
-export const Timer = ({ mode, setMode }: TimerProps) => {
-  const [time, setTime] = useState<Time>({});
-  const [display, setDisplay] = useState<String>("0");
+export const Timer = ({ mode, setMode, case_id }: TimerProps) => {
   const [minutes, setMinutes] = useState<String>("0");
   const [seconds, setSeconds] = useState<String>("00");
   const [milliseconds, setMilliseconds] = useState<String>("000");
+  const [ms_elapsed, setMs_elapsed] = useState<number>(0);
   const [intervalID, setIntervalID] = useState<number>(-1);
   const [running, setRunning] = useState<boolean>(false);
-  const { 
+  const {
     postTimes,
-    loading: timesLoading,
-    error: timesError
-   } = useTimes();
+    loading: timesLoading
+  } = useTimes();
 
-  let startTime: number;
+  var startTime: number;
+  var time: Time = {};
+  useEffect(() => {
+    time.case_id = case_id;
+  }, [case_id])
 
   const update = () => {
     const delta = new Date(Date.now() - startTime);
     setMinutes(String(delta.getMinutes()));
     setSeconds(String(delta.getSeconds()).padStart(2, '0'));
     setMilliseconds(String(delta.getMilliseconds()).padStart(3, '0'));
-    setTime({ ms_elapsed: delta.valueOf() });
+    setMs_elapsed(delta.valueOf())
   }
 
   const timerStart = () => {
-    if (running) return;
+    if (running || timesLoading) return;
     setRunning(true);
     setMode("START");
     console.log("START");
@@ -41,15 +44,20 @@ export const Timer = ({ mode, setMode }: TimerProps) => {
   }
 
   const timerStop = async () => {
-    if (!running) return;
+    if (!running || timesLoading) return;
     setRunning(false);
     console.log("STOP");
     console.log("  Stopping interval ID:", intervalID);
     clearInterval(intervalID);
-    console.log(startTime);
-    setDisplay(String(time.ms_elapsed));
     try {
-      await postTimes(time);
+      console.log({
+        case_id: case_id,
+        ms_elapsed: ms_elapsed
+      });
+      await postTimes({
+        case_id: case_id,
+        ms_elapsed: ms_elapsed
+      });
     } catch (error) {
       console.error(error);
     }
@@ -91,7 +99,6 @@ export const Timer = ({ mode, setMode }: TimerProps) => {
           DELETE
         </button>
       </div>
-      <span>time in ms: {display}</span>
     </div>
   )
 }
