@@ -5,9 +5,9 @@ import { TimesAPI } from "../api";
 interface useTimesResult {
   loading: boolean;
   error: Error | null;
-  getTimes: (case_id: number) => Promise<[Time]>;
-  getAverage: (case_id: number) => Promise<number>;
-  getBest: (case_id: number) => Promise<number>;
+  getTimes: (case_id: number) => Promise<Time[]>;
+  getAverage: (case_id: number) => Promise<number | undefined>;
+  getBest: (case_id: number) => Promise<number | undefined>;
   postTimes: (time: Time) => Promise<void>;
   patchTimes: (time: Time) => Promise<void>;
   deleteTimes: (time: Time) => Promise<void>;
@@ -83,6 +83,7 @@ export const useTimes = (): useTimesResult => {
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Patch times request failed");
       setError(normalizedError);
+      console.log("normalizedError:", normalizedError);
       throw normalizedError;
     } finally {
       setLoading(false);
