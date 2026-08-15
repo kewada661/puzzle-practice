@@ -37,8 +37,7 @@ export const Algorithms = ({ case_id }: AlgorithmsProps) => {
         console.error(e);
         if (e instanceof Error && e.name === "TokenExpiredError") {
           refreshSession()
-            .then(()=> init())
-            .catch((e)=> console.error(e));
+            .then(() => init());
         }
       });
   }
@@ -67,25 +66,34 @@ export const Algorithms = ({ case_id }: AlgorithmsProps) => {
   const handleSave = () => {
     setSaving(true);
     try {
-      algs.forEach((item) => {
+      algs.forEach(async (item) => {
         try {
-          if (item.alg_id) patchAlgorithms(item);
+          if (item.alg_id) {
+            console.log("PATCH");
+            await patchAlgorithms(item);
+          }
           else postAlgorithms(item);
         } catch (e) {
           throw e;
         }
       });
-      forDeletion.forEach((item) => {
+      forDeletion.forEach(async (item) => {
         try {
-          deleteAlgorithms(item);
+          if (item.alg_id) deleteAlgorithms(item);
         } catch (e) {
           throw e;
         }
       })
     } catch (e) {
       console.error(e);
+      if (e instanceof Error && e.name === "TokenExpiredError") {
+        refreshSession()
+          .then(() => handleSave());
+      }
     } finally {
+      setForDeletion([]);
       setSaving(false);
+      init();
     }
   }
 

@@ -19,12 +19,18 @@ export const AlgorithmCard = ({ algorithm, index }: AlgorithmCardProps) => {
   }
 
   const handleTrash = () => {
+    console.log(algorithm);
     setForDeletion(prev => [...prev, algorithm])
     setAlgs(prev => prev.filter(item => item !== algorithm));
   }
 
   const handleSave = () => {
     try {
+      setAlgs((prev) => {
+        return prev.map((item) => {
+          return item === algorithm ? {...item, algorithm: text} : item;
+        })
+      })
     } catch (e) {
       console.error(e);
     } finally {
