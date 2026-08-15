@@ -5,10 +5,10 @@ import { AlgorithmsAPI } from "../api";
 interface useAlgorithmsResults {
   loading: boolean;
   error: Error | null;
-  getAlgorithms: (case_id: number) => Promise<[Algorithm]>;
-  postAlgorithms: (alg: Algorithm) => Promise<void>;
-  patchAlgorithms: (alg: Algorithm) => Promise<void>;
-  deleteAlgorithms: (alg: Algorithm) => Promise<void>;
+  getAlgorithms: (case_id: number) => Promise<Algorithm[]>;
+  postAlgorithms: (alg: Algorithm) => void;
+  patchAlgorithms: (alg: Algorithm) => void;
+  deleteAlgorithms: (alg: Algorithm) => void;
 }
 
 export const useAlgorithms = (): useAlgorithmsResults => {
@@ -16,6 +16,8 @@ export const useAlgorithms = (): useAlgorithmsResults => {
   const [error, setError] = useState<Error | null>(null);
 
   const getAlgorithms = async (case_id: number) => {
+    setLoading(true);
+    setError(null);
     try {
       return await AlgorithmsAPI.getAlgorithms(case_id);
     } catch (error) {
@@ -28,6 +30,8 @@ export const useAlgorithms = (): useAlgorithmsResults => {
   }
 
   const postAlgorithms = async (alg: Algorithm) => {
+    setLoading(true);
+    setError(null);
     try {
       await AlgorithmsAPI.postAlgorithms(alg);
     } catch (error) {
@@ -40,6 +44,8 @@ export const useAlgorithms = (): useAlgorithmsResults => {
   }
 
   const patchAlgorithms = async (alg: Algorithm) => {
+    setLoading(true);
+    setError(null);
     try {
       await AlgorithmsAPI.patchAlgorithms(alg);
     } catch (error) {
@@ -52,6 +58,8 @@ export const useAlgorithms = (): useAlgorithmsResults => {
   }
 
   const deleteAlgorithms = async (alg: Algorithm) => {
+    setLoading(true);
+    setError(null);
     try {
       await AlgorithmsAPI.deleteAlgorithms(alg);
     } catch (error) {
