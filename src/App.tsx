@@ -1,37 +1,32 @@
-import { useState } from 'react'
-import type { Scene } from './types/scene'
 import { Home, OLL, PLL } from './scenes'
 import { Header } from './components'
+import { useSceneContext } from './context'
 
 function App() {
-  const [scene, setScene] = useState<Scene>("HOME")
+  const { scene } = useSceneContext();
 
   const renderScene = () => {
     switch (scene) {
       case "OLL":
         return (
           <>
-            <Header changeScene={changeSceneCallback}/>
+            <Header />
             <OLL />
           </>
         )
       case "PLL":
         return (
           <>
-            <Header changeScene={changeSceneCallback}/>
+            <Header />
             <PLL />
           </>
         )
       case "FULL":
       case "HOME":
-        return <Home changeScene={changeSceneCallback}/>
+        return <Home />
     }
   }
 
-  const changeSceneCallback = (newScene: Scene) => {
-    setScene(newScene);
-  }
-  
   return (
     <>
       {renderScene()}
