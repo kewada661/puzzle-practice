@@ -1,19 +1,17 @@
-import type { Scene } from "../types/scene"
+import { useSceneContext } from "../context"
 
-interface HeaderProps {
-  changeScene: (scene: Scene) => void;
-}
-export const Header = ({changeScene}: HeaderProps) => {
+export const Header = () => {
+  const { setScene } = useSceneContext();
 
   return (
     <div className="flex flex-row gap-4">
-      <button onClick={() => changeScene("OLL")}>
+      <button onClick={() => setScene("OLL")}>
         OLL
       </button>
-      <button onClick={() => changeScene("PLL")}>
+      <button onClick={() => setScene("PLL")}>
         PLL
       </button>
-      <button onClick={() => changeScene("HOME")}>
+      <button onClick={() => setScene("HOME")}>
         home
       </button>
     </div>

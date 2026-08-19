@@ -1,16 +1,13 @@
 import { useState } from 'react';
-import type { Scene } from '../types/scene';
 import { Auth } from '../components';
 // import reactLogo from '/src/assets/react.svg';
 // import viteLogo from '/src/assets/vite.svg';
 // import heroImg from '/src/assets/hero.png';
 import '../Home.css';
+import { useSceneContext } from '../context';
 
-interface HomeProps {
-  changeScene: (scene: Scene) => void;
-}
-
-export const Home = ({changeScene}: HomeProps) => {
+export const Home = () => {
+  const {setScene} = useSceneContext();
   const [count, setCount] = useState(0)
 
   return (
@@ -27,14 +24,14 @@ export const Home = ({changeScene}: HomeProps) => {
         <button
           type="button"
           className="counter"
-          onClick={() => changeScene("OLL")}
+          onClick={() => setScene("OLL")}
         >
           Practice OLL
         </button>
         <button
           type="button"
           className="counter"
-          onClick={() => changeScene("PLL")}
+          onClick={() => setScene("PLL")}
         >
           Practice PLL
         </button>
