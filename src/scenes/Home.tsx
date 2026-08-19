@@ -38,6 +38,13 @@ export const Home = ({changeScene}: HomeProps) => {
         >
           Practice PLL
         </button>
+        <button
+          type="button"
+          className="counter"
+          onClick={() => changeScene("TIMES")}
+        >
+          View times
+        </button>
       </section>
 
       <div className="ticks"></div>

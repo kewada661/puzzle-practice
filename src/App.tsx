@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import type { Scene } from './types/scene'
-import { Home, OLL, PLL } from './scenes'
+import {
+  Home,
+  OLL,
+  PLL,
+  Times
+} from './scenes'
 import { Header } from './components'
 
 function App() {
@@ -11,27 +16,34 @@ function App() {
       case "OLL":
         return (
           <>
-            <Header changeScene={changeSceneCallback}/>
+            <Header changeScene={changeSceneCallback} />
             <OLL />
           </>
         )
       case "PLL":
         return (
           <>
-            <Header changeScene={changeSceneCallback}/>
+            <Header changeScene={changeSceneCallback} />
             <PLL />
+          </>
+        )
+      case "TIMES":
+        return (
+          <>
+            <Header changeScene={changeSceneCallback} />
+            <Times />
           </>
         )
       case "FULL":
       case "HOME":
-        return <Home changeScene={changeSceneCallback}/>
+        return <Home changeScene={changeSceneCallback} />
     }
   }
 
   const changeSceneCallback = (newScene: Scene) => {
     setScene(newScene);
   }
-  
+
   return (
     <>
       {renderScene()}

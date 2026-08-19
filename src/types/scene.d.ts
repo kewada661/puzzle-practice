@@ -3,3 +3,4 @@ export type Scene =
   | "OLL"
   | "PLL"
   | "FULL"
+  | "TIMES"
