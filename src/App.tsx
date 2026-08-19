@@ -1,4 +1,11 @@
-import { Home, OLL, PLL } from './scenes'
+import { useState } from 'react'
+import type { Scene } from './types/scene'
+import {
+  Home,
+  OLL,
+  PLL,
+  Times
+} from './scenes'
 import { Header } from './components'
 import { useSceneContext } from './context'
 
@@ -19,6 +26,13 @@ function App() {
           <>
             <Header />
             <PLL />
+          </>
+        )
+      case "TIMES":
+        return (
+          <>
+            <Header />
+            <Times />
           </>
         )
       case "FULL":
