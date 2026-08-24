@@ -10,7 +10,6 @@ export const OLL = () => {
   const [solve, setSolve] = useState<String>("");
   const [mode, setMode] = useState<TimerMode>("RESET");
   const [displayHint, setDisplayHint] = useState<boolean>(false);
-  const [displaySolve, setDisplaySolve] = useState<boolean>(false);
   const [displayAlgs, setDisplayAlgs] = useState<boolean>(false);
 
   var OLLCase: Case;

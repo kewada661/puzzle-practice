@@ -23,7 +23,12 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src",
-    ".react-router/types/**/*",
+    "src/**/*",
+    // ".react-router/types/**/*",
+  ],
+  "exclude": [
+    "src/routes/**/*",
+    "src/root.tsx",
+    "src/routes.tsx"
   ]
 }

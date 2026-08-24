@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent, type SubmitEventHandler } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks";
 
 export const Auth = () => {
