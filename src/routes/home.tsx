@@ -1,20 +1,49 @@
 import type { Route } from "../../.react-router/types/src/routes/+types/home";
+import { NavLink } from "react-router";
 import {
   AuthContextProvider,
-  SceneContextProvider,
 } from '../context';
 
-import App from "../App";
+import { Auth } from "../components";
 import "../index.css";
+import { useState } from "react";
 
-const Home = ({ loaderData }: Route.ComponentProps) => {
+export const Home = ({ loaderData }: Route.ComponentProps) => {
+  const [count, setCount] = useState<number>(0);
   return (
-    <AuthContextProvider>
-      <SceneContextProvider>
-        <App />
-      </SceneContextProvider>
-    </AuthContextProvider>
+    <>
+      <section id="center">
+        <Auth />
+        <button
+          // type="button"
+          className="counter"
+          onClick={() => setCount((count) => count + 1)}
+        >
+          Count is {count}
+        </button>
+        <NavLink
+          className="counter"
+          to="/oll"
+        >
+          Practice OLL
+        </NavLink>
+        <NavLink
+          className="counter"
+          to="/pll"
+        >
+          Practice PLL
+        </NavLink>
+        <NavLink
+          className="counter"
+          to="/times"
+        >
+          View times
+        </NavLink>
+      </section>
 
+      <div className="ticks"></div>
+      <section id="spacer"></section>
+    </>
   )
 }
 
@@ -22,4 +51,4 @@ export const loader = () => {
   return { func: () => console.log("CLICK") };
 }
 
-export default Home
+export default Home;
