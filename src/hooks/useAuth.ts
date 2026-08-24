@@ -27,8 +27,8 @@ export const useAuth = (): useAuthResults => {
     setError(null);
     try {
       const user = await AuthAPI.loginRequest(credentials);
-      console.log (user);
       setUser(user);
+      localStorage.setItem("username", user.username)
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Login failed");
       setError(normalizedError);
@@ -42,6 +42,7 @@ export const useAuth = (): useAuthResults => {
     try {
       await AuthAPI.logoutRequest();
       setUser(null);
+      localStorage.removeItem("username");
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Logout failed");
       setError(normalizedError);
@@ -55,9 +56,12 @@ export const useAuth = (): useAuthResults => {
     try {
       const user = await AuthAPI.refreshTokenRequest();
       setUser(user);
+      localStorage.setItem("username", user.username)
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Session refresh failed");
       setError(normalizedError);
+      setUser(null);
+      localStorage.removeItem("username");
       throw normalizedError;
     } finally {
       setLoading(false);

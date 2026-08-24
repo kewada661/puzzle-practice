@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import type { Scene } from './types/scene'
 import {
   Home,
   OLL,
