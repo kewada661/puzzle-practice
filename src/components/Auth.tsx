@@ -4,8 +4,8 @@ import { useAuth } from "../hooks";
 export const Auth = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string | null>(localStorage.getItem("username"));
   const {
-    user,
     isAuthenticated,
     loading,
     login,
@@ -14,15 +14,25 @@ export const Auth = () => {
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    if (username === "" || password === "") {
+      return;
+    }
     try {
       await login({username: username, password: password});
     } catch (e) {
       console.error(e);
+    } finally {
+      setUsername("");
+      setPassword("");
+      setName(localStorage.getItem("username"))
     }
   }
 
   const handleLogout = async () => {
     try {
+      setUsername("");
+      setPassword("");
+      setName(null);
       await logout();
     } catch (e) {
       console.error(e);
@@ -30,18 +40,15 @@ export const Auth = () => {
   }
   return (
     <>
-      <p>Hello, {isAuthenticated && user ? (user.username) : ("world")}!</p>
-      {(isAuthenticated) ? (
+      <p>Hello, {name ?? "world"}!</p>
+      {(isAuthenticated || name) ? (
         <button
-          className="counter"
+          className="counter" 
           onClick={handleLogout}
         >
           Logout
         </button>
       ) : (
-        (loading) ? (
-          "Logging you in..."
-        ) : (
         <form 
           className="flex flex-col place-items-center gap-4"
           onSubmit={handleSubmit}
@@ -67,9 +74,8 @@ export const Auth = () => {
           >
             Auth
           </button>
+          <div className="h-3">{loading ? `...` : ``}</div>
         </form>
-
-        )
       )}
     </>
   )

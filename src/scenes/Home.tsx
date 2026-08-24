@@ -5,10 +5,12 @@ import { Auth } from '../components';
 // import heroImg from '/src/assets/hero.png';
 import '../Home.css';
 import { useSceneContext } from '../context';
+import { useAuth } from '../hooks';
 
 export const Home = () => {
   const {setScene} = useSceneContext();
   const [count, setCount] = useState(0)
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
@@ -38,7 +40,7 @@ export const Home = () => {
         <button
           type="button"
           className="counter"
-          onClick={() => changeScene("TIMES")}
+          onClick={() => isAuthenticated && setScene("TIMES")}
         >
           View times
         </button>
