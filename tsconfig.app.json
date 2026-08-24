@@ -7,6 +7,7 @@
     "types": ["vite/client"],
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
+    "rootDirs": ["src", ".react-router/types"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -24,6 +25,6 @@
   },
   "include": [
     "src/**/*",
-    ".react-router/types/**/*",
+    // ".react-router/types/**/*",
   ]
 }
