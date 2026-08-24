@@ -1,12 +1,25 @@
 import type { Route } from "../../.react-router/types/src/routes/+types/home";
-import App from "../App";
+import {
+  AuthContextProvider,
+  SceneContextProvider,
+} from '../context';
 
-const Home = ({}: Route.ComponentProps) => {
-  return <App />;
+import App from "../App";
+import "../index.css";
+
+const Home = ({ loaderData }: Route.ComponentProps) => {
+  return (
+    <AuthContextProvider>
+      <SceneContextProvider>
+        <App />
+      </SceneContextProvider>
+    </AuthContextProvider>
+
+  )
 }
 
 export const loader = () => {
-  return { message: "Hello world!"};
+  return { func: () => console.log("CLICK") };
 }
 
 export default Home

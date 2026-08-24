@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Auth } from '../components';
 // import reactLogo from '/src/assets/react.svg';
 // import viteLogo from '/src/assets/vite.svg';
@@ -12,6 +12,13 @@ export const Home = () => {
   const [count, setCount] = useState(0)
   const { isAuthenticated } = useAuth();
 
+  useEffect(() => {
+    console.log("counter");
+  }, [count]);
+
+  const handleClick = () => {
+    console.log("click");
+  }
   return (
     <>
       <section id="center">
@@ -19,7 +26,7 @@ export const Home = () => {
         <button
           type="button"
           className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={handleClick}
         >
           Count is {count}
         </button>
