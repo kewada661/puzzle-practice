@@ -1,10 +1,10 @@
-import { useEffect, useState, type FormEvent, type SubmitEventHandler } from "react";
+import { useState, type FormEvent, type SubmitEventHandler } from "react";
 import { useAuth } from "../hooks";
 
 export const Auth = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [name, setName] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(localStorage.getItem("username"));
   const {
     isAuthenticated,
     loading,
@@ -38,13 +38,6 @@ export const Auth = () => {
       console.error(e);
     }
   }
-
-  useEffect(() => {
-    setName(localStorage.getItem("username"));
-    return () => {
-      setName(null);
-    }
-  })
   return (
     <>
       <p>Hello, {name ?? "world"}!</p>
