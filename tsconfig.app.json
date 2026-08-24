@@ -24,11 +24,6 @@
   },
   "include": [
     "src/**/*",
-    // ".react-router/types/**/*",
-  ],
-  "exclude": [
-    "src/routes/**/*",
-    "src/root.tsx",
-    "src/routes.tsx"
+    ".react-router/types/**/*",
   ]
 }
