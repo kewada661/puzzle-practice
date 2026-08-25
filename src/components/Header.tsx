@@ -1,19 +1,32 @@
-import { useSceneContext } from "../context"
+import { NavLink } from "react-router";
 
 export const Header = () => {
-  const { setScene } = useSceneContext();
-
   return (
     <div className="flex flex-row gap-4">
-      <button onClick={() => setScene("OLL")}>
+      <NavLink
+        className="counter"
+        to="/"
+      >
+        Home
+      </NavLink>
+      <NavLink
+        className="counter"
+        to="/oll"
+      >
         OLL
-      </button>
-      <button onClick={() => setScene("PLL")}>
+      </NavLink>
+      <NavLink
+        className="counter"
+        to="/pll"
+      >
         PLL
-      </button>
-      <button onClick={() => setScene("HOME")}>
-        home
-      </button>
+      </NavLink>
+      <NavLink
+        className="counter"
+        to="/times"
+      >
+        Times
+      </NavLink>
     </div>
   )
 }

@@ -1,14 +1,13 @@
 import { TimesList } from "../components";
 import { useAuth } from "../hooks";
-import { useSceneContext } from "../context";
+import { redirect } from "react-router";
 
 export const Times = () => {
   const {
     isAuthenticated,
   } = useAuth();
-  const { setScene } = useSceneContext();
   if (!isAuthenticated) {
-    setScene("HOME");
+    redirect('/');
   }
 
   return (
@@ -17,3 +16,5 @@ export const Times = () => {
     </>
   )
 }
+
+export default Times;

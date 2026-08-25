@@ -8,6 +8,7 @@ import { Header } from './components'
 import { useSceneContext } from './context'
 
 function App() {
+  console.log("Hello");
   const { scene } = useSceneContext();
 
   const renderScene = () => {

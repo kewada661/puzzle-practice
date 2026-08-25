@@ -17,8 +17,8 @@ export const OLL = () => {
   const next = () => {
     console.log("NEXT:");
     if (OLLCase !== undefined) previousCases.push(OLLCase);
-    OLLCase = new Case(0);
-    setCase_id(OLLCase.number + 1);
+    OLLCase = Case.OLL();
+    setCase_id(OLLCase.case_id);
     setName(OLLCase.name);
     setScramble(OLLCase.scramble);
     setSolve(OLLCase.solve);
@@ -39,37 +39,41 @@ export const OLL = () => {
   }, [])
   return (
     <>
-      <span>name: {name}</span>
-      <span>case_id: {case_id}</span>
-      <span>scramble: {scramble}</span>
-      {(displayHint) ? (
-        <>
-          <span>Solution: {solve}</span>
-          {(displayAlgs) ? (
-            <AlgContextProvider>
-              <Algorithms case_id={23} />
-            </AlgContextProvider>
-          ) : (
-            <button
-              onClick={() => setDisplayAlgs(true)}
-            >
-              Edit Solutions
-            </button>
-          )}
-        </>
-      ) : (
-        <button onClick={handleHint}>
-          Solution
+      <div className="flex flex-col gap-2 mb-8 justify-center items-center">
+        <span>name: {name}</span>
+        <span>case_id: {case_id}</span>
+        <span>scramble: {scramble}</span>
+        {(displayHint) ? (
+          <>
+            <span>Solution: {solve}</span>
+            {(displayAlgs) ? (
+              <AlgContextProvider>
+                <Algorithms case_id={23} />
+              </AlgContextProvider>
+            ) : (
+              <button
+                onClick={() => setDisplayAlgs(true)}
+              >
+                Edit Solutions
+              </button>
+            )}
+          </>
+        ) : (
+          <button onClick={handleHint}>
+            Solution
+          </button>
+        )}
+        <button onClick={next}>
+          Next Case
         </button>
-      )}
-      <button onClick={next}>
-        Next Case
-      </button>
-      <Timer
-        mode={mode}
-        setMode={timerModeCallback}
-        case_id={case_id}
-      />
+        <Timer
+          mode={mode}
+          setMode={timerModeCallback}
+          case_id={case_id}
+        />
+      </div>
     </>
   )
 }
+
+export default OLL

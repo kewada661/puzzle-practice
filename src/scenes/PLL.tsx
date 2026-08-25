@@ -1,5 +1,5 @@
-import { Timer } from "../components/Timer"
-import type { timerMode } from "../components/Timer";
+import { Timer } from "../components"
+import type { TimerMode } from "../types";
 import { Case } from "../components/Case"
 import { useCallback, useEffect, useState } from "react";
 
@@ -7,7 +7,7 @@ export const PLL = () => {
   const [name, setName] = useState<String>("");
   const [scramble, setScramble] = useState<String>("");
   const [solve, setSolve] = useState<String>("");
-  const [mode, setMode] = useState<timerMode>("RESET");
+  const [mode, setMode] = useState<TimerMode>("RESET");
   var OLLCase: Case;
   var previousCases: Case[];
   const next = () => {
@@ -20,7 +20,7 @@ export const PLL = () => {
     setMode("RESET");
   }
 
-  const timerModeCallback = useCallback((newMode: timerMode) => {
+  const timerModeCallback = useCallback((newMode: TimerMode) => {
     setMode(newMode);
   }, [setMode]);
 
@@ -39,6 +39,7 @@ export const PLL = () => {
       <Timer
         mode={mode}
         setMode={timerModeCallback}
+        case_id={57}
       />
     </>
   )

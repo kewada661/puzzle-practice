@@ -17,7 +17,7 @@ export const Home = () => {
       <section id="center">
         <Auth />
         <button
-          type="button"
+          // type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
         >
