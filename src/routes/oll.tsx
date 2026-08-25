@@ -1,12 +1,9 @@
-import type { Route } from "../../.react-router/types/src/routes/+types/oll";
-import { NavLink } from "react-router";
-
 import { Timer, Case, Algorithms } from "../components"
 import { AlgContextProvider } from "../context";
 import type { TimerMode } from "../types";
 import { useCallback, useEffect, useState } from "react";
 
-export const OLL = ({ loaderData }: Route.ComponentProps) => {
+export const OLL = () => {
   const [name, setName] = useState<String>("");
   const [case_id, setCase_id] = useState<number>(0);
   const [scramble, setScramble] = useState<String>("");
@@ -20,8 +17,8 @@ export const OLL = ({ loaderData }: Route.ComponentProps) => {
   const next = () => {
     console.log("NEXT:");
     if (OLLCase !== undefined) previousCases.push(OLLCase);
-    OLLCase = new Case(0);
-    setCase_id(OLLCase.number + 1);
+    OLLCase = Case.OLL();
+    setCase_id(OLLCase.case_id);
     setName(OLLCase.name);
     setScramble(OLLCase.scramble);
     setSolve(OLLCase.solve);
@@ -77,10 +74,6 @@ export const OLL = ({ loaderData }: Route.ComponentProps) => {
       </div>
     </>
   )
-}
-
-export const loader = () => {
-  return { func: () => console.log("CLICK") };
 }
 
 export default OLL

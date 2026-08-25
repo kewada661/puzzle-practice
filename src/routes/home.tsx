@@ -8,7 +8,7 @@ import { Auth } from "../components";
 import "../index.css";
 import { useState } from "react";
 
-export const Home = ({ loaderData }: Route.ComponentProps) => {
+export const Home = () => {
   const [count, setCount] = useState<number>(0);
   return (
     <>
@@ -45,10 +45,6 @@ export const Home = ({ loaderData }: Route.ComponentProps) => {
       <section id="spacer"></section>
     </>
   )
-}
-
-export const loader = () => {
-  return { func: () => console.log("CLICK") };
 }
 
 export default Home;

@@ -1,5 +1,4 @@
 export const names =
-[
   [
     "OLL_1",
     "OLL_2",
@@ -58,8 +57,6 @@ export const names =
     "OLL_55",
     "OLL_56",
     "OLL_57",
-  ],
-  [
     "PLL_1",
     "PLL_2",
     "PLL_3",
@@ -81,5 +78,4 @@ export const names =
     "PLL_19",
     "PLL_20",
     "PLL_21",
-  ]
-];
+  ];
