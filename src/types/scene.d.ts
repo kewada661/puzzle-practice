@@ -3,8 +3,4 @@ export type Scene =
   | "OLL"
   | "PLL"
   | "FULL"
-
-export type TimerMode = 
-  | 'RESET'
-  | 'START'
-  | 'STOP'
+  | "TIMES"

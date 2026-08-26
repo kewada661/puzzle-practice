@@ -1,21 +1,32 @@
-import type { Scene } from "../types"
+import { NavLink } from "react-router";
 
-interface HeaderProps {
-  changeScene: (scene: Scene) => void;
-}
-export const Header = ({changeScene}: HeaderProps) => {
-
+export const Header = () => {
   return (
     <div className="flex flex-row gap-4">
-      <button onClick={() => changeScene("OLL")}>
+      <NavLink
+        className="counter"
+        to="/"
+      >
+        Home
+      </NavLink>
+      <NavLink
+        className="counter"
+        to="/oll"
+      >
         OLL
-      </button>
-      <button onClick={() => changeScene("PLL")}>
+      </NavLink>
+      <NavLink
+        className="counter"
+        to="/pll"
+      >
         PLL
-      </button>
-      <button onClick={() => changeScene("HOME")}>
-        home
-      </button>
+      </NavLink>
+      <NavLink
+        className="counter"
+        to="/times"
+      >
+        Times
+      </NavLink>
     </div>
   )
 }

@@ -1,5 +1,4 @@
-export const scrambles = 
-[
+export const scrambles =
   [
     [
       "F' U2 B L' U2 B L F' D2 R2 U B2 U F2 R2 B2 D B2 D L2",
@@ -4218,9 +4217,7 @@ export const scrambles =
       "R2 U R L F' U2 F R' L' U R2 U' R2 B2 R2 B2 U' R2 U",
       "R F D B2 R D2 F U' L U F2 R2 U R2 U' R2 F2 D F2",
       "R L F R2 F R L U' F2 U L2 D' L2 D F2 R2 L2 U' R2 U2"
-    ]
-  ],
-  [
+    ],
     [
       "R L D2 R L D2 R2 B2 D2 B2 L2 F2 U2 R2 F2 U2",
       "F B D2 F B D2 F2 R2 D2 R2 B2 L2 U2 F2 L2 U2",
@@ -4348,4 +4345,3 @@ export const scrambles =
       "L R U2 L R' F2 U B2 U' R2 U B2 L2 B2 F2 D B2 U'"
     ]
   ]
-]
