@@ -1,15 +1,13 @@
-import type { Route } from "../../.react-router/types/src/routes/+types/home";
+import type { Route } from "@router-types/home.ts";
 import { NavLink } from "react-router";
-import {
-  AuthContextProvider,
-} from '../context';
 
 import { Auth } from "../components";
 import "../index.css";
 import { useState } from "react";
 
-export const Home = () => {
+export const Home = ({ loaderData }: Route.ComponentProps) => {
   const [count, setCount] = useState<number>(0);
+  console.log(loaderData);
   return (
     <>
       <section id="center">
@@ -45,6 +43,10 @@ export const Home = () => {
       <section id="spacer"></section>
     </>
   )
+}
+
+export const loader = () => {
+  return { message: "This is a message" };
 }
 
 export default Home;

@@ -4,13 +4,17 @@ import { useAuth } from "../hooks";
 export const Auth = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [name, setName] = useState<string | null>(localStorage.getItem("username"));
+  const [name, setName] = useState<string | null>(null);
   const {
     isAuthenticated,
     loading,
     login,
     logout
   } = useAuth();
+
+  useEffect(() => {
+    setName(localStorage.getItem("username"));
+  })
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
