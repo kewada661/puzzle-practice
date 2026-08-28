@@ -15,7 +15,6 @@ class Case {
     this.name = names[case_id];
     this.scramble = scrambles[case_id][Math.floor(Math.random() * scrambles[case_id].length)];
     this.solve = algs[case_id].alg[0];
-    console.log(reactLogo);
     this.imgURL = reactLogo;
   }
 
@@ -32,7 +31,6 @@ class Case {
     const case_id = Math.floor(Math.random() * 21) + 56;
     return new Case(case_id);
   }
-
 }
 
 export { Case }

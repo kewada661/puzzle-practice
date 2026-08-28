@@ -3,48 +3,60 @@ import type { Grade } from "../types"
 import { GradesAPI } from "../api";
 
 interface useGradesResult {
-  loading: boolean;
-  error: Error | null;
+  // loading: boolean;
+  // error: Error | null;
   getGrades: (case_id: number) => Promise<Grade>;
+  getUserGrades: () => Promise<Grade[]>;
   updateGrades: (grade: Grade) => Promise<void>;
 }
 
 export const useGrades = (): useGradesResult => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [error, setError] = useState<Error | null>(null);
 
   const getGrades = async (case_id: number) => {
-    setLoading(true);
-    setError(null);
+    // setLoading(true);
+    // setError(null);
     try {
       return await GradesAPI.getGrades(case_id);
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Get grades request failed");
-      setError(normalizedError);
+      // setError(normalizedError);
       throw normalizedError;
     } finally {
-      setLoading(false);
+      // setLoading(false);
+    }
+  }
+
+  const getUserGrades = async () => {
+    try {
+      return await GradesAPI.getUserGrades();
+    } catch (error) {
+      const normalizedError = error instanceof Error ? error : new Error("Get grades request failed");
+      throw normalizedError;
+    } finally {
     }
   }
 
   const updateGrades = async (grade: Grade) => {
-    setLoading(true);
-    setError(null);
+    // setLoading(true);
+    // setError(null);
     try {
       await GradesAPI.postGrades(grade)
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Update grades request failed");
-      setError(normalizedError);
+      // setError(normalizedError);
       throw normalizedError;
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   }
 
   return {
-    loading,
-    error,
+    // loading,
+    // error,
     getGrades,
+    getUserGrades,
     updateGrades
   }
 }
