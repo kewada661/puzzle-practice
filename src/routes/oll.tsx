@@ -3,10 +3,33 @@ import { Timer, Case, Algorithms } from "../components";
 import { AlgContextProvider } from "../context";
 import { useGrades } from "../hooks";
 import type { Grade, TimerMode } from "../types";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { redirect } from "react-router";
 
+export const clientLoader = async () => {
+  const {
+    // loading: gradesLoading,
+    getUserGrades,
+    updateGrades,
+  } = useGrades();
+  try {
+    const grades = await getUserGrades();
+    return {
+      updateGrades,
+      grades
+    }
+  } catch (e) {
+    console.error(e);
+    throw redirect('/');
+  }
+}
+
+export const hydrateFallback = () => {
+  return <div>LOADING...</div>
+}
+
 export const OLL = ({ loaderData }: Route.ComponentProps) => {
+  console.log(loaderData);
   const [OLLCase, setOLLCase] = useState<Case>(Case.OLL());
   const [previousCases, setPreviousCases] = useState<Case[]>([]);
   const [mode, setMode] = useState<TimerMode>("RESET");
@@ -78,27 +101,6 @@ export const OLL = ({ loaderData }: Route.ComponentProps) => {
       </div>
     </>
   )
-}
-
-export const clientLoader = async () => {
-  const {
-    // loading: gradesLoading,
-    getUserGrades,
-    updateGrades,
-  } = useGrades();
-  try {
-    const grades = await getUserGrades();
-    return {
-      updateGrades,
-      grades
-    }
-  } catch (e) {
-    console.error(e);
-    if (e instanceof Error && (e.name === "TokenExpiredError" || e.name === "TypeError")) {
-      throw redirect('/');
-    }
-  }
-
 }
 
 export default OLL
