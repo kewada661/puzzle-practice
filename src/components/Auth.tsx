@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useFetcher } from "react-router";
 import { useAuth } from "../hooks";
 
 export const Auth = () => {
@@ -6,11 +7,12 @@ export const Auth = () => {
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string | null>(null);
   const {
-    isAuthenticated,
-    loading,
+    // isAuthenticated,
+    // loading,
     login,
     logout
   } = useAuth();
+  const fetcher = useFetcher();
 
   useEffect(() => {
     setName(localStorage.getItem("username"));
@@ -34,10 +36,10 @@ export const Auth = () => {
 
   const handleLogout = async () => {
     try {
+      await logout();
       setUsername("");
       setPassword("");
       setName(null);
-      await logout();
     } catch (e) {
       console.error(e);
     }
@@ -45,7 +47,7 @@ export const Auth = () => {
   return (
     <>
       <p>Hello, {name ?? "world"}!</p>
-      {(isAuthenticated || name) ? (
+      {(name !== null) ? (
         <button
           className="counter" 
           onClick={handleLogout}
@@ -53,7 +55,7 @@ export const Auth = () => {
           Logout
         </button>
       ) : (
-        <form 
+        <fetcher.Form
           className="flex flex-col place-items-center gap-4"
           onSubmit={handleSubmit}
         >
@@ -74,12 +76,12 @@ export const Auth = () => {
           <button
             type="submit"
             className="counter"
-            disabled={loading}
+            disabled={fetcher.state !== "idle"}
           >
             Auth
           </button>
-          <div className="h-3">{loading ? `...` : ``}</div>
-        </form>
+          <div className="h-3">{fetcher.state !== "idle" ? `...` : ``}</div>
+        </fetcher.Form>
       )}
     </>
   )

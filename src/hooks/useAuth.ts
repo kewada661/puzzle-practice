@@ -4,75 +4,76 @@ import type { LoginCredentials, User } from "../types";
 import { AuthAPI } from "../api";
 
 interface useAuthResults {
-  user: User | null;
-  isAuthenticated: boolean;
-  loading: boolean;
-  error: Error | null;
+  // user: User | null;
+  // isAuthenticated: boolean;
+  // loading: boolean;
+  // error: Error | null;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => Promise<void>;
   refreshSession: () => Promise<void>;
 }
 
 export const useAuth = (): useAuthResults => {
-  const {
-    user,
-    setUser
-  } = useAuthContext();
+  // const {
+  //   user,
+  //   setUser
+  // } = useAuthContext();
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [error, setError] = useState<Error | null>(null);
 
   const login = async (credentials: LoginCredentials) => {
-    setLoading(true);
-    setError(null);
+    // setLoading(true);
+    // setError(null);
     try {
       const user = await AuthAPI.loginRequest(credentials);
-      setUser(user);
+      // setUser(user);
       localStorage.setItem("username", user.username)
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Login failed");
-      setError(normalizedError);
+      // setError(normalizedError);
       throw normalizedError;
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   }
 
   const logout = async () => {
     try {
       await AuthAPI.logoutRequest();
-      setUser(null);
+      // setUser(null);
       localStorage.removeItem("username");
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Logout failed");
-      setError(normalizedError);
+      // setError(normalizedError);
       throw normalizedError;
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   }
 
   const refreshSession = async () => {
     try {
       const user = await AuthAPI.refreshTokenRequest();
-      setUser(user);
+      // setUser(user);
+      console.log(user.username);
       localStorage.setItem("username", user.username)
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Session refresh failed");
-      setError(normalizedError);
-      setUser(null);
+      // setError(normalizedError);
+      // setUser(null);
       localStorage.removeItem("username");
       throw normalizedError;
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   }
 
   return {
-    user,
-    isAuthenticated: user !== null,
-    loading,
-    error,
+    // user,
+    // isAuthenticated: user !== null,
+    // loading,
+    // error,
     login,
     logout,
     refreshSession
