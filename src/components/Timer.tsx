@@ -36,24 +36,15 @@ export const Timer = ({ mode, setMode, case_id }: TimerProps) => {
   const timerStart = () => {
     if (running || timesLoading) return;
     setRunning(true);
-    setMode("START");
-    console.log("START");
     startTime = Date.now();
     setIntervalID(setInterval(update));
-    console.log("  Starting interval ID:", intervalID);
   }
 
   const timerStop = async () => {
     if (!running || timesLoading) return;
     setRunning(false);
-    console.log("STOP");
-    console.log("  Stopping interval ID:", intervalID);
     clearInterval(intervalID);
     try {
-      console.log({
-        case_id: case_id,
-        ms_elapsed: ms_elapsed
-      });
       await postTimes({
         case_id: case_id,
         ms_elapsed: ms_elapsed
@@ -64,7 +55,6 @@ export const Timer = ({ mode, setMode, case_id }: TimerProps) => {
   }
 
   const timerDelete = () => {
-    console.log("DELETE");
     setRunning(false);
     clearInterval(intervalID);
     setMinutes("0");

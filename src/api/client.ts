@@ -13,7 +13,6 @@ export const apiRequest = async <T>(endpoint: string, options: RequestInit = {})
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);
-    console.log(errorBody);
     let error = new Error();
     error.name = errorBody.name ?? "Error";
     error.message = `${errorBody.message ?? `Request failed with status code ${response.status}`} at /api${endpoint}`;
