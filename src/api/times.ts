@@ -25,6 +25,14 @@ export const getBest = async (case_id: number): Promise<Time> => {
   )
 }
 
+export const getSnapshot = async (): Promise<Time[][]> => {
+  return await apiRequest<Time[][]>(`/times/snapshot`,
+    {
+      method: "GET"
+    }
+  )
+}
+
 export const postTimes = async (time: Time): Promise<void> => {
   await apiRequest<any>(`/times/${time.case_id}`,
     {
