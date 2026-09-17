@@ -42,6 +42,7 @@ export const useGrades = (): useGradesResult => {
     // setLoading(true);
     // setError(null);
     try {
+      console.log("update with grade, case_id:", grade.grade, grade.case_id)
       await GradesAPI.postGrades(grade)
     } catch (error) {
       const normalizedError = error instanceof Error ? error : new Error("Update grades request failed");

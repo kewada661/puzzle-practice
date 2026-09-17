@@ -1,61 +1,75 @@
 import type { Route } from "@router-types/oll";
 import { Timer, Case, Algorithms } from "../components";
 import { AlgContextProvider } from "../context";
-import { useGrades } from "../hooks";
+import { useAuth, useGrades, useTimes } from "../hooks";
 import type { Grade, TimerMode } from "../types";
-import { useCallback, useState } from "react";
-import { redirect } from "react-router";
-
-export const clientLoader = async () => {
-  const {
-    // loading: gradesLoading,
-    getUserGrades,
-    updateGrades,
-  } = useGrades();
-  try {
-    const grades = await getUserGrades();
-    return {
-      updateGrades,
-      grades
-    }
-  } catch (e) {
-    console.error(e);
-    throw redirect('/');
-  }
-}
+import { useCallback, useEffect, useState } from "react";
+import { redirect, createContext } from "react-router";
+import { useTimerContext } from "../context";
 
 export const hydrateFallback = () => {
   return <div>LOADING...</div>
 }
 
-export const OLL = ({ loaderData }: Route.ComponentProps) => {
-  console.log(loaderData);
+export const OLL = () => {
   const [OLLCase, setOLLCase] = useState<Case>(Case.OLL());
   const [previousCases, setPreviousCases] = useState<Case[]>([]);
-  const [mode, setMode] = useState<TimerMode>("RESET");
+  const { setMode } = useTimerContext();
   const [displayHint, setDisplayHint] = useState<boolean>(false);
   const [displayAlgs, setDisplayAlgs] = useState<boolean>(false);
-  const [grade, setGrade] = useState<Grade | null>(null);
+  const [loading, setLoading] = useState<boolean>(false)
+  const { postTimes } = useTimes();
+  const { updateGrades, getGrades } = useGrades();
+  const { refreshSession } = useAuth();
+  const [prevGrade, setPrevGrade] = useState<number>(1);
 
-  const next = () => {
-    console.log("NEXT:");
-    setPreviousCases(prev => [...prev, OLLCase]);
-    setOLLCase(Case.OLL());
+  var grade = prevGrade;
+  const handleNext = async () => {
     setMode("RESET");
+    if (OLLCase !== undefined) {
+      setPreviousCases(prev => [...prev, OLLCase]);
+    }
+    setOLLCase(Case.OLL());
+    try {
+      const g = await getGrades(OLLCase!.case_id);
+      if (!Number.isNaN(g.grade) && g.grade !== undefined) {
+        grade = g.grade;
+      }
+    } catch (e) {
+      if (!(e instanceof Error)) {
+        console.error("Unknown error in getGrades");
+      }
+      if (e instanceof Error && e.name === "TokenExpiredError") {
+        refreshSession()
+          .then(() => handleNext())
+          .catch(() => redirect("/"))
+      }
+    }
   }
 
-  const handleNext = () => {
-    //do grades
-    //generate next case
-    //
-  }
-  const handleHint = () => {
-    setDisplayHint(true);
+  const onFinish = async (ms_elapsed: number) => {
+    if (OLLCase === undefined) return;
+    setLoading(true);
+    try {
+      await postTimes({
+        case_id: OLLCase.case_id,
+        ms_elapsed: ms_elapsed
+      });
+      grade = displayHint ? grade - 1 : grade + 1;
+
+      console.log(grade);
+      await updateGrades({ grade: grade, case_id: OLLCase.case_id });
+      setPrevGrade(grade);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const timerModeCallback = useCallback((newMode: TimerMode) => {
-    setMode(newMode);
-  }, [setMode]);
+  useEffect(() => {
+
+  }, [])
 
   return (
     <>
@@ -79,22 +93,24 @@ export const OLL = ({ loaderData }: Route.ComponentProps) => {
             )}
           </>
         ) : (
-          <button onClick={handleHint}>
+          <button onClick={() => setDisplayHint(true)}>
             Solution
           </button>
         )}
-        <button onClick={next}>
+        <button
+          onClick={handleNext}
+          disabled={loading}
+        >
           Next Case
         </button>
         <Timer
-          mode={mode}
-          setMode={timerModeCallback}
+          finishCallback={onFinish}
           case_id={OLLCase.case_id}
         />
         <div className="flex flex-row gap-2">
-          {previousCases.map((item) => {
+          {previousCases.map((item, i) => {
             return (
-              <div>{item.case_id}</div>
+              <div key={i}>{item.case_id}</div>
             )
           })}
         </div>
