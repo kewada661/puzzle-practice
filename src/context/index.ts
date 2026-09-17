@@ -2,6 +2,7 @@ import { useAuthContext, AuthContextProvider } from "./AuthContext";
 import { useAlgContext, AlgContextProvider } from "./AlgContext";
 import { useSceneContext, SceneContextProvider } from "./SceneContext";
 import { useTimeContext, TimeContextProvider } from "./TimeContext";
+import { useTimerContext, TimerContextProvider } from "./TimerContext";
 export {
   useAuthContext,
   AuthContextProvider,
@@ -10,5 +11,7 @@ export {
   useSceneContext,
   SceneContextProvider,
   useTimeContext,
-  TimeContextProvider
+  TimeContextProvider,
+  useTimerContext,
+  TimerContextProvider
 }
